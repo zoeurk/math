@@ -9,7 +9,6 @@
 const char *argp_program_version= "math-0.1";
 const char *argp_program_bug_address = "zoeurk@gmail.com";
 static char doc[] = "Simple program which use some function of 'math.h.'\"(gcc -lm)\"";
-
 static struct argp_option
 options[] = {	{"double",'d', NULL,0,"uliser une valeur double"},
 		{"float",'F',NULL,0,"utiliser une valeur float"},
@@ -30,6 +29,7 @@ options[] = {	{"double",'d', NULL,0,"uliser une valeur double"},
 		{"radian",'R',NULL,0,"afficher le résultat en radian plutôt quand degrès"},
 		{"degre",'r',NULL,0,"les entrées sont en degrès plutôt quand radian"},
 		{"newline",'N',NULL,0,"affiche le resultat avec un nouvelle ligne: \"result\\n\""},
+		{"help",'h', NULL, 0, "try -? or \"--usage\""},
 		{0}
  };
 typedef char bool;
@@ -194,6 +194,9 @@ parse_opt(int key, char *arg, struct argp_state *state)
   case 'O': args->format = arg;
   	    break;
   case ARGP_KEY_END:
+  	    break;
+  case 'h': printf("try --usage or -?\n");
+  	    exit(EXIT_FAILURE);
   	    break;
   case ARGP_KEY_ARG:
   	    if( (arg && strlen(arg) > 0)|| &state->argv[state->next])
