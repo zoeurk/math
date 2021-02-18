@@ -29,7 +29,7 @@ options[] = {	{"double",'d', NULL,0,"uliser une valeur double"},
 		{"radian",'R',NULL,0,"afficher le résultat en radian plutôt quand degrès"},
 		{"degre",'r',NULL,0,"les entrées sont en degrès plutôt quand radian"},
 		{"newline",'N',NULL,0,"affiche le resultat avec un nouvelle ligne: \"result\\n\""},
-		{"help",'h', NULL, 0, "try -? or \"--usage\""},
+		/*{"help",'h', NULL, 0, "try -? or \"--usage\""},*/
 		{0}
  };
 typedef char bool;
