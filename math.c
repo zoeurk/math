@@ -211,7 +211,7 @@ parse_opt(int key, char *arg, struct argp_state *state)
  }
  return 0;
 }
-static struct argp argp = { options, parse_opt, NULL, doc };
+static struct argp argp = { options, parse_opt, NULL, doc, NULL, NULL, NULL };
 void
 check_double_value(int n,char *value,...)
 {
@@ -349,17 +349,17 @@ main(int argc,char **argv)
 	          n = 1;
 	          break;
      case SQRT : calcule.d.dfn = &sqrt;
- 	       n = 1;
-	       break;
+     		 n = 1;
+		 break;
      case EXP  : calcule.d.dfn = &exp;
-	          n = 1;
-	          break;
+	         n = 1;
+	         break;
      case LOG  : calcule.d.dfn = &log;
-  	          n = 1;
-  	          break;
+  	         n = 1;
+  	         break;
      case LOG10: calcule.d.dfn = &log10;
-  	          n = 1;
-  	          break;
+  	         n = 1;
+  	         break;
      case FABS : calcule.d.dfn = &fabs;
  	          n = 1;
   	          break;
