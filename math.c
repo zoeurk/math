@@ -195,9 +195,9 @@ parse_opt(int key, char *arg, struct argp_state *state)
   	    break;
   case ARGP_KEY_END:
   	    break;
-  case 'h': printf("try --usage or -?\n");
+  /*case 'h': printf("try --usage or -?\n");
   	    exit(EXIT_FAILURE);
-  	    break;
+  	    break;*/
   case ARGP_KEY_ARG:
   	    if( (arg && strlen(arg) > 0)|| &state->argv[state->next])
 	    {
