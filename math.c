@@ -6,6 +6,9 @@
 #include <argp.h>
 #include <stdarg.h>
 #include <string.h>
+
+#define PI 3.141592653589793
+
 const char *argp_program_version= "math-0.1";
 const char *argp_program_bug_address = "zoeurk@gmail.com";
 static char doc[] = "Simple program which use some function of 'math.h.'\"(gcc -lm)\"";
@@ -468,13 +471,13 @@ main(int argc,char **argv)
      end[i] = &args.numbers[i][strlen(args.numbers[i])-1];
      calcule.value.dnumber[i] = strtod(args.numbers[i],&end[i]);
     if(!(args.type&ORADIAN) && !(args.type&IDEGRES))
-     calcule.value.dnumber[i] = calcule.value.dnumber[i]*M_PI/180;
+     calcule.value.dnumber[i] = calcule.value.dnumber[i]*PI/180;
     else
      if((args.type&ORADIAN) && !(args.type&IDEGRES))
       calcule.value.dnumber[i] = calcule.value.dnumber[i];
      else
       if((args.type&ORADIAN) && (args.type&IDEGRES))
-       calcule.value.dnumber[i] = calcule.value.dnumber[i]*180/M_PI;
+       calcule.value.dnumber[i] = calcule.value.dnumber[i]*180/PI;
       else
        if(!(args.type&ORADIAN) && (args.type&IDEGRES))
         calcule.value.dnumber[i] = calcule.value.dnumber[i];
@@ -495,13 +498,13 @@ main(int argc,char **argv)
       end[i] = &args.numbers[i][strlen(args.numbers[i])-1];
       calcule.value.fnumber[i] = strtof(args.numbers[i],&end[i]);
       if(!(args.type&ORADIAN) && !(args.type&IDEGRES))
-       calcule.value.fnumber[i] = calcule.value.fnumber[i]*M_PI/180;
+       calcule.value.fnumber[i] = calcule.value.fnumber[i]*PI/180;
       else
        if((args.type&ORADIAN) && !(args.type&IDEGRES))
         calcule.value.fnumber[i] = calcule.value.fnumber[i];
        else
         if((args.type&ORADIAN) && (args.type&IDEGRES))
-         calcule.value.fnumber[i] = calcule.value.fnumber[i]*180/M_PI;
+         calcule.value.fnumber[i] = calcule.value.fnumber[i]*180/PI;
         else
          if(!(args.type&ORADIAN) && (args.type&IDEGRES))
           calcule.value.fnumber[i] = calcule.value.fnumber[i];
@@ -522,13 +525,13 @@ main(int argc,char **argv)
      end[i] = &args.numbers[i][strlen(args.numbers[i]-1)];
      calcule.value.ldnumber[i] = strtold(args.numbers[i],&end[i]);
      if(!(args.type&ORADIAN) && !(args.type&IDEGRES))
-      calcule.value.ldnumber[i] = calcule.value.ldnumber[i]*M_PI/180;
+      calcule.value.ldnumber[i] = calcule.value.ldnumber[i]*PI/180;
      else
       if((args.type&ORADIAN) && !(args.type&IDEGRES))
        calcule.value.ldnumber[i] = calcule.value.ldnumber[i];
       else
        if((args.type&ORADIAN) && (args.type&IDEGRES))
-        calcule.value.ldnumber[i] = calcule.value.ldnumber[i]*180/M_PI;
+        calcule.value.ldnumber[i] = calcule.value.ldnumber[i]*180/PI;
        else
         if(!(args.type&ORADIAN) && (args.type&IDEGRES))
          calcule.value.ldnumber[i] = calcule.value.ldnumber[i];
