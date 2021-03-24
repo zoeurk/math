@@ -3,37 +3,34 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <errno.h>
-/*#include <argp.h>*/
+#include <argp.h>
 #include <stdarg.h>
 #include <string.h>
-#include "parsearg.h"
-/*const char *argp_program_version= "math-0.1";
-const char *argp_program_bug_address = "zoeurk@gmail.com";*/
-struct info program = { "version 1.0", "zoeurk@gmail.com" };
-/*static char doc[] = "Simple program which use some function of 'math.h.'\"(gcc -lm)\"";*/
-struct parser_option
-options[] = {	{"double",'d', 0, NULL,"uliser une valeur double"},
-		{"float",'F', 0,NULL,"utiliser une valeur float"},
-		{"dlong",'D', 0, NULL,"utiliser une valeur double long"},
-		{"cos",'c',0, "X","cosinus d'un nombre X"},
-		{"sin",'s',0, "X","sinus d'un nombre X"},
-		{"tan",'t',0, "X","tangente d'un nombre X"},
-		{"sqrt",'S',0, "X","carré d'un nombre X"},
-		{"exp",'e',0, "X","valeur exponentiel d' un nombre X"},
-		{"log",'l',0, "X","logarithme naturel (en base 'e') d'un nombre X"},
-		{"log10",'L',0,"X","logarithme naturel (en base 10) d'un nombre X"},
-		{"fabs",'f',0, "X","valeur absolue d'un nombre X"},
-		{"ceil",'C',0, "X","arrondi un nombre X à un entier plus petit"},
-		{"floor",'o',0, "X","arrondi un nombre X à un entier plus grand"},
-		{"pow",'p',0, "X=x,Y=y","puissance d'une valeur X élevé à la valeur Y"},
-		{"fmod",'m',0, "X=x,Y=y","reste de X/Y"},
-		{"virgule",'O',0, "FORMAT","afficher nombre de chiffre après la virgule"},
-		{"radian",'R',0, NULL,"afficher le résultat en radian plutôt quand degrès"},
-		{"degre",'r',0, NULL,"les entrées sont en degrès plutôt quand radian"},
-		{"newline",'N',0, NULL,"affiche le resultat avec un nouvelle ligne: \"result\\n\""},
-		/*{"help",'h', NULL, 0, "try -? or \"--usage\""},*/
-		{0}
+const char *argp_program_version= "math-0.1";
+const char *argp_program_bug_address = "zoeurk@gmail.com";
+static char doc[] = "Simple program which use some function of 'math.h.'\"(gcc -lm)\"";
 
+static struct argp_option
+options[] = {	{"double",'d', NULL,0,"uliser une valeur double"},
+		{"float",'F',NULL,0,"utiliser une valeur float"},
+		{"dlong",'D',NULL,0,"utiliser une valeur double long"},
+		{"cos",'c',"X",0,"cosinus d'un nombre X"},
+		{"sin",'s',"X",0,"sinus d'un nombre X"},
+		{"tan",'t',"X",0,"tangente d'un nombre X"},
+		{"sqrt",'S',"X",0,"carré d'un nombre X"},
+		{"exp",'e',"X",0,"valeur exponentiel d' un nombre X"},
+		{"log",'l',"X",0,"logarithme naturel (en base 'e') d'un nombre X"},
+		{"log10",'L',"X",0,"logarithme naturel (en base 10) d'un nombre X"},
+		{"fabs",'f',"X",0,"valeur absolue d'un nombre X"},
+		{"ceil",'C',"X",0,"arrondi un nombre X à un entier plus petit"},
+		{"floor",'o',"X",0,"arrondi un nombre X à un entier plus grand"},
+		{"pow",'p',"X:Y",0,"puissance d'une valeur X élevé à la valeur Y"},
+		{"fmod",'m',"X:Y",0,"reste de X/Y"},
+		{"virgule",'O',"FORMAT",0,"afficher nombre de chiffre après la virgule"},
+		{"radian",'R',NULL,0,"afficher le résultat en radian plutôt quand degrès"},
+		{"degre",'r',NULL,0,"les entrées sont en degrès plutôt quand radian"},
+		{"newline",'N',NULL,0,"affiche le resultat avec un nouvelle ligne: \"result\\n\""},
+		{0}
  };
 typedef char bool;
 enum numbers{
@@ -66,7 +63,7 @@ enum type
  DOUBLE  = 0,
  FLOAT   = 1,
  LDOUBLE = 2,
- IRADIAN = 4,
+ IDEGRES = 4,
  ORADIAN = 8,
  NEWLINE = 16
 }type;
@@ -129,8 +126,8 @@ comput_two_numbers(struct arguments **args,char *option)
  }
  return 0;
 }
-void
-parse_opt(int key, char *arg, struct parser_state *state)
+static error_t
+parse_opt(int key, char *arg, struct argp_state *state)
 {
  struct arguments *args = state->input;
  switch(key)
@@ -170,7 +167,7 @@ parse_opt(int key, char *arg, struct parser_state *state)
   	    if(comput_two_numbers(&args,arg) < 0)
 	    {
 	     fprintf(stderr,"Missing(/Bad) arguments for \"-%c\".\n",key);
-	     /*parser_usage(state);*/
+	     argp_usage(state);
 	     exit(EXIT_FAILURE);
 	    }
   	    break;
@@ -178,7 +175,7 @@ parse_opt(int key, char *arg, struct parser_state *state)
   	    if(comput_two_numbers(&args,arg) < 0)
 	    {
 	     fprintf(stderr,"Missing(/Bad) arguments for \"-%c\".\n",key);
-	     /*parser_usage(state);*/
+	     argp_usage(state);
 	     exit(EXIT_FAILURE);
 	    }
   	    break;
@@ -188,16 +185,15 @@ parse_opt(int key, char *arg, struct parser_state *state)
   	    break;
   case 'D': args->type |= LDOUBLE;
   	    break;
-  case 'r': args->type |= IRADIAN;
+  case 'r': args->type |= IDEGRES;
   	    break;
   case 'R': args->type |= ORADIAN;
   	    break;
   case 'N': args->type |= NEWLINE;
   	    break;
   case 'O': args->format = arg;
-  	/*parser_usage(state->parser);*/
   	    break;
-  /*case ARGP_KEY_END:
+  case ARGP_KEY_END:
   	    break;
   case ARGP_KEY_ARG:
   	    if( (arg && strlen(arg) > 0)|| &state->argv[state->next])
@@ -206,17 +202,13 @@ parse_opt(int key, char *arg, struct parser_state *state)
 	     break;
 	    }
   	    state->next = state->argc;
-	    break;*/
+	    break;
   default:
-  	fprintf(stderr,"Unanderstand parameter: \'%s\'.\nTry --help or --usage for more information.\n", arg);
-	exit(EXIT_FAILURE);
+  	    return ARGP_ERR_UNKNOWN;
  }
- /*return 0;*/
+ return 0;
 }
-const char about[] = "Simple program which use some function of 'math.h.'\"(gcc -lm)\"";
-static struct parser argp = { options, parse_opt, "OPTIONS", NULL, \
-				about, \
-				&program, NULL };
+static struct argp argp = { options, parse_opt, NULL, doc };
 void
 check_double_value(int n,char *value,...)
 {
@@ -332,7 +324,7 @@ main(int argc,char **argv)
  size_t len,len_;
  int n,i,set;
  bool need_to_be_created = 0;
- parser_parse(&argp, argc, argv, &args);
+ argp_parse(&argp, argc, argv, 0, 0, &args);
  if(args.function == INIT)
  {
   fprintf(stderr,"Aucune opération de fournie!!!\n");
@@ -354,17 +346,17 @@ main(int argc,char **argv)
 	          n = 1;
 	          break;
      case SQRT : calcule.d.dfn = &sqrt;
-     		 n = 1;
-		 break;
+ 	       n = 1;
+	       break;
      case EXP  : calcule.d.dfn = &exp;
-	         n = 1;
-	         break;
+	          n = 1;
+	          break;
      case LOG  : calcule.d.dfn = &log;
-  	         n = 1;
-  	         break;
+  	          n = 1;
+  	          break;
      case LOG10: calcule.d.dfn = &log10;
-  	         n = 1;
-  	         break;
+  	          n = 1;
+  	          break;
      case FABS : calcule.d.dfn = &fabs;
  	          n = 1;
   	          break;
@@ -475,6 +467,17 @@ main(int argc,char **argv)
     if(args.numbers[i]){
      end[i] = &args.numbers[i][strlen(args.numbers[i])-1];
      calcule.value.dnumber[i] = strtod(args.numbers[i],&end[i]);
+    if(!(args.type&ORADIAN) && !(args.type&IDEGRES))
+     calcule.value.dnumber[i] = calcule.value.dnumber[i]*M_PI/180;
+    else
+     if((args.type&ORADIAN) && !(args.type&IDEGRES))
+      calcule.value.dnumber[i] = calcule.value.dnumber[i];
+     else
+      if((args.type&ORADIAN) && (args.type&IDEGRES))
+       calcule.value.dnumber[i] = calcule.value.dnumber[i]*180/M_PI;
+      else
+       if(!(args.type&ORADIAN) && (args.type&IDEGRES))
+        calcule.value.dnumber[i] = calcule.value.dnumber[i];
     }
    }
    format_tmp = (char *)format[set];
@@ -491,6 +494,17 @@ main(int argc,char **argv)
      if(args.numbers[i]){
       end[i] = &args.numbers[i][strlen(args.numbers[i])-1];
       calcule.value.fnumber[i] = strtof(args.numbers[i],&end[i]);
+      if(!(args.type&ORADIAN) && !(args.type&IDEGRES))
+       calcule.value.dnumber[i] = calcule.value.fnumber[i]*M_PI/180;
+      else
+       if((args.type&ORADIAN) && !(args.type&IDEGRES))
+        calcule.value.dnumber[i] = calcule.value.fnumber[i];
+       else
+        if((args.type&ORADIAN) && (args.type&IDEGRES))
+         calcule.value.dnumber[i] = calcule.value.fnumber[i]*180/M_PI;
+        else
+         if(!(args.type&ORADIAN) && (args.type&IDEGRES))
+          calcule.value.dnumber[i] = calcule.value.fnumber[i];
     }
    }
    format_tmp = (char *)format[set];
@@ -507,6 +521,17 @@ main(int argc,char **argv)
     if(args.numbers[i]){
      end[i] = &args.numbers[i][strlen(args.numbers[i]-1)];
      calcule.value.ldnumber[i] = strtold(args.numbers[i],&end[i]);
+     if(!(args.type&ORADIAN) && !(args.type&IDEGRES))
+      calcule.value.dnumber[i] = calcule.value.ldnumber[i]*M_PI/180;
+     else
+      if((args.type&ORADIAN) && !(args.type&IDEGRES))
+       calcule.value.dnumber[i] = calcule.value.ldnumber[i];
+      else
+       if((args.type&ORADIAN) && (args.type&IDEGRES))
+        calcule.value.dnumber[i] = calcule.value.ldnumber[i]*180/M_PI;
+       else
+        if(!(args.type&ORADIAN) && (args.type&IDEGRES))
+         calcule.value.dnumber[i] = calcule.value.ldnumber[i];
     }
    }
    format_tmp = (char *)format[set];
@@ -563,49 +588,6 @@ main(int argc,char **argv)
     		  break;
    }
  }
- switch(set)
- { 
-  case DOUBLE:
-    if(!(args.type&ORADIAN) && !(args.type&IRADIAN))
-     calcule.result.dresult = calcule.result.dresult*M_PI/180;
-    else
-     if((args.type&ORADIAN) && !(args.type&IRADIAN))
-      calcule.result.dresult = calcule.result.dresult;
-     else
-      if((args.type&ORADIAN) && (args.type&IRADIAN))
-       calcule.result.dresult = calcule.result.dresult*180/M_PI;
-      else
-       if(!(args.type&ORADIAN) && (args.type&IRADIAN))
-        calcule.result.dresult = calcule.result.dresult;
-   break;
-  case FLOAT:
-      if(!(args.type&ORADIAN) && !(args.type&IRADIAN))
-       calcule.result.fresult = calcule.result.fresult;
-      else
-       if((args.type&ORADIAN) && !(args.type&IRADIAN))
-        calcule.result.fresult = calcule.result.fresult*M_PI/180;
-       else
-        if((args.type&ORADIAN) && (args.type&IRADIAN))
-         calcule.result.fresult = calcule.result.fresult;
-        else
-         if(!(args.type&ORADIAN) && (args.type&IRADIAN))
-          calcule.result.fresult = calcule.result.fresult*180/M_PI;
-   break;
-  case LDOUBLE:
-   /*Convertion (Degres/Radian)*/
-     if(!(args.type&ORADIAN) && !(args.type&IRADIAN))
-      calcule.result.ldresult = calcule.result.ldresult;
-     else
-      if((args.type&ORADIAN) && !(args.type&IRADIAN))
-       calcule.result.ldresult = calcule.result.ldresult*M_PI/180;
-      else
-       if((args.type&ORADIAN) && (args.type&IRADIAN))
-        calcule.result.ldresult = calcule.result.ldresult;
-       else
-        if(!(args.type&ORADIAN) && (args.type&IRADIAN))
-         calcule.result.ldresult = calcule.result.ldresult*180/M_PI;
-   break;
-  }
  switch(set)
  {
   case DOUBLE:  printf(calcule.format,calcule.result.dresult);
