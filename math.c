@@ -495,16 +495,16 @@ main(int argc,char **argv)
       end[i] = &args.numbers[i][strlen(args.numbers[i])-1];
       calcule.value.fnumber[i] = strtof(args.numbers[i],&end[i]);
       if(!(args.type&ORADIAN) && !(args.type&IDEGRES))
-       calcule.value.dnumber[i] = calcule.value.fnumber[i]*M_PI/180;
+       calcule.value.fnumber[i] = calcule.value.fnumber[i]*M_PI/180;
       else
        if((args.type&ORADIAN) && !(args.type&IDEGRES))
-        calcule.value.dnumber[i] = calcule.value.fnumber[i];
+        calcule.value.fnumber[i] = calcule.value.fnumber[i];
        else
         if((args.type&ORADIAN) && (args.type&IDEGRES))
-         calcule.value.dnumber[i] = calcule.value.fnumber[i]*180/M_PI;
+         calcule.value.fnumber[i] = calcule.value.fnumber[i]*180/M_PI;
         else
          if(!(args.type&ORADIAN) && (args.type&IDEGRES))
-          calcule.value.dnumber[i] = calcule.value.fnumber[i];
+          calcule.value.fnumber[i] = calcule.value.fnumber[i];
     }
    }
    format_tmp = (char *)format[set];
@@ -522,16 +522,16 @@ main(int argc,char **argv)
      end[i] = &args.numbers[i][strlen(args.numbers[i]-1)];
      calcule.value.ldnumber[i] = strtold(args.numbers[i],&end[i]);
      if(!(args.type&ORADIAN) && !(args.type&IDEGRES))
-      calcule.value.dnumber[i] = calcule.value.ldnumber[i]*M_PI/180;
+      calcule.value.ldnumber[i] = calcule.value.ldnumber[i]*M_PI/180;
      else
       if((args.type&ORADIAN) && !(args.type&IDEGRES))
-       calcule.value.dnumber[i] = calcule.value.ldnumber[i];
+       calcule.value.ldnumber[i] = calcule.value.ldnumber[i];
       else
        if((args.type&ORADIAN) && (args.type&IDEGRES))
-        calcule.value.dnumber[i] = calcule.value.ldnumber[i]*180/M_PI;
+        calcule.value.ldnumber[i] = calcule.value.ldnumber[i]*180/M_PI;
        else
         if(!(args.type&ORADIAN) && (args.type&IDEGRES))
-         calcule.value.dnumber[i] = calcule.value.ldnumber[i];
+         calcule.value.ldnumber[i] = calcule.value.ldnumber[i];
     }
    }
    format_tmp = (char *)format[set];
