@@ -1,5 +1,5 @@
 GCC=gcc
-OPTIONS=-Wall -Wpadded -Wunused -g -v -lm
+OPTIONS=-Wall -Wpadded -Wunused -Wextra -g -v -lm
 GNU90=-std=gnu90
 GNU89=-std=gnu89
 ANSI=-ansi -D_GNU_SOURCE

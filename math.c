@@ -595,6 +595,7 @@ main(int argc,char **argv)
     case LDOUBLE: calcule.result.ldresult = calcule.l.ldfn2(calcule.value.ldnumber[0],calcule.value.ldnumber[1]);
     		  break;
    }
+   break;
   default:
    switch(set)
    {
@@ -605,6 +606,7 @@ main(int argc,char **argv)
     case LDOUBLE: calcule.result.ldresult = calcule.l.ldfn(calcule.value.ldnumber[0]);
     		  break;
    }
+   break;
  }
  switch(set)
  {
