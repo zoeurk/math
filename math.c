@@ -14,25 +14,25 @@ const char *argp_program_bug_address = "zoeurk@gmail.com";
 static char doc[] = "Simple program which use some function of 'math.h.'\"(gcc -lm)\"";
 
 static struct argp_option
-options[] = {	{"double",'d', NULL,0,"uliser une valeur double"},
-		{"float",'F',NULL,0,"utiliser une valeur float"},
-		{"dlong",'D',NULL,0,"utiliser une valeur double long"},
-		{"cos",'c',"X",0,"cosinus d'un nombre X"},
-		{"sin",'s',"X",0,"sinus d'un nombre X"},
-		{"tan",'t',"X",0,"tangente d'un nombre X"},
-		{"sqrt",'S',"X",0,"carré d'un nombre X"},
-		{"exp",'e',"X",0,"valeur exponentiel d' un nombre X"},
-		{"log",'l',"X",0,"logarithme naturel (en base 'e') d'un nombre X"},
-		{"log10",'L',"X",0,"logarithme naturel (en base 10) d'un nombre X"},
-		{"fabs",'f',"X",0,"valeur absolue d'un nombre X"},
-		{"ceil",'C',"X",0,"arrondi un nombre X à un entier plus petit"},
-		{"floor",'o',"X",0,"arrondi un nombre X à un entier plus grand"},
-		{"pow",'p',"X:Y",0,"puissance d'une valeur X élevé à la valeur Y"},
-		{"fmod",'m',"X:Y",0,"reste de X/Y"},
-		{"virgule",'O',"FORMAT",0,"afficher nombre de chiffre après la virgule"},
-		{"radian",'R',NULL,0,"afficher le résultat en radian plutôt quand degrès"},
-		{"degre",'r',NULL,0,"les entrées sont en degrès plutôt quand radian"},
-		{"newline",'N',NULL,0,"affiche le resultat avec un nouvelle ligne: \"result\\n\""},
+options[] = {	{"double",'d', NULL,0,"uliser une valeur double", 0},
+		{"float",'F',NULL,0,"utiliser une valeur float", 0},
+		{"dlong",'D',NULL,0,"utiliser une valeur double long", 0},
+		{"cos",'c',"X",0,"cosinus d'un nombre X", 1},
+		{"sin",'s',"X",0,"sinus d'un nombre X", 1},
+		{"tan",'t',"X",0,"tangente d'un nombre X",1},
+		{"sqrt",'S',"X",0,"carré d'un nombre X",1},
+		{"exp",'e',"X",0,"valeur exponentiel d' un nombre X",1},
+		{"log",'l',"X",0,"logarithme naturel (en base 'e') d'un nombre X", 1},
+		{"log10",'L',"X",0,"logarithme naturel (en base 10) d'un nombre X", 1},
+		{"fabs",'f',"X",0,"valeur absolue d'un nombre X", 1},
+		{"ceil",'C',"X",0,"arrondi un nombre X à un entier plus petit", 1},
+		{"floor",'o',"X",0,"arrondi un nombre X à un entier plus grand", 1},
+		{"pow",'p',"X:Y",0,"puissance d'une valeur X élevé à la valeur Y",2},
+		{"fmod",'m',"X:Y",0,"reste de X/Y",2},
+		{"virgule",'O',"FORMAT",0,"afficher nombre de chiffre après la virgule",4},
+		{"radian",'R',NULL,0,"afficher le résultat en radian plutôt quand degrès",3},
+		{"degre",'r',NULL,0,"les entrées sont en degrès plutôt quand radian",3},
+		{"newline",'N',NULL,0,"affiche le resultat avec un nouvelle ligne: \"result\\n\"", 5},
 		{0}
  };
 typedef char bool;
@@ -195,7 +195,7 @@ parse_opt(int key, char *arg, struct argp_state *state)
   	    break;
   case 'N': args->type |= NEWLINE;
   	    break;
-  case 'O': for(i = 0; i <strlen(arg); i++){
+  case 'O': for(i = 0; (unsigned long int)i <strlen(arg); i++){
 	     if(arg[i] < 48 || arg[i] > 57){
 		     fprintf(stderr,"Bad value for format:\'%s\'.\n",arg);
 		     args->format = NULL;
@@ -203,7 +203,7 @@ parse_opt(int key, char *arg, struct argp_state *state)
 		     break;
 	     }
 	    }
-	    if(i == strlen(arg))args->format = arg;
+	    if((unsigned long int)i == strlen(arg))args->format = arg;
 	    else	args->format = NULL;
   	    break;
   case ARGP_KEY_END:
@@ -221,7 +221,7 @@ parse_opt(int key, char *arg, struct argp_state *state)
  }
  return 0;
 }
-static struct argp argp = { options, parse_opt, NULL, doc };
+static struct argp argp = { options, parse_opt, NULL, doc, NULL, NULL, NULL };
 void
 check_double_value(int n,char *value,...)
 {
@@ -340,7 +340,7 @@ main(int argc,char **argv)
  int n,i,set;
  bool need_to_be_created = 0;
  argp_parse(&argp, argc, argv, 0, 0, &args);
- if(args.function == INIT)
+ if(args.function == (unsigned long int)INIT)
  {
   fprintf(stderr,"Aucune opération de fournie!!!\n");
   exit(EXIT_FAILURE);
