@@ -133,6 +133,7 @@ static error_t
 parse_opt(int key, char *arg, struct argp_state *state)
 {
  struct arguments *args = state->input;
+ int i;
  switch(key)
  {
   case 'c': args->function = COS;
@@ -194,7 +195,16 @@ parse_opt(int key, char *arg, struct argp_state *state)
   	    break;
   case 'N': args->type |= NEWLINE;
   	    break;
-  case 'O': args->format = arg;
+  case 'O': for(i = 0; i <strlen(arg); i++){
+	     if(arg[i] < 48 || arg[i] > 57){
+		     fprintf(stderr,"Bad value for format:\'%s\'.\n",arg);
+		     args->format = NULL;
+		     i = 0;
+		     break;
+	     }
+	    }
+	    if(i == strlen(arg))args->format = arg;
+	    else	args->format = NULL;
   	    break;
   case ARGP_KEY_END:
   	    break;
@@ -302,17 +312,19 @@ check_long_double_value(int n, char *value,...)
  }
  va_end(ap);
 }
-int
-check_virgule(char *string)
+/*int
+check_virgule(char *buffer, char *string)
 {
  char buffer[1024];
- if(sscanf(string,"%[0-9.,]",buffer) ==0)
+ if(strlen(string) > 1023 || sscanf(string,"%[0-9]*",buffer) ==0)
  {
-  perror("check_vigule:sscanf())");
+  fprintf(stderr, "Bad format: \'%s\'.\n", string);
   return -1;
  }
+ printf("=>%s\n", buffer);
+ strcpy(string,buffer);
  return 0;
-}
+}*/
 int
 main(int argc,char **argv)
 {
@@ -484,7 +496,8 @@ main(int argc,char **argv)
     }
    }
    format_tmp = (char *)format[set];
-   if(!args.format || check_virgule(args.format))
+   /*if(!args.format || check_virgule(args.format))*/
+   if(!args.format)
     calcule.format = (char *)___dprintf___;
    else
     /*Prepare to %.'args.format'lf*/
@@ -511,8 +524,9 @@ main(int argc,char **argv)
     }
    }
    format_tmp = (char *)format[set];
-   if(!args.format || check_virgule(args.format))
-    calcule.format = (char *)___fprintf___;
+   /*if(!args.format || check_virgule(args.format))*/
+   if(!args.format)
+     calcule.format = (char *)___fprintf___;
    else
     /*Prepare to %0.'args.format'lf*/
     need_to_be_created = 2;
@@ -538,7 +552,8 @@ main(int argc,char **argv)
     }
    }
    format_tmp = (char *)format[set];
-   if(!args.format || check_virgule(args.format))
+   /*if(!args.format || check_virgule(args.format))*/
+   if(!args.format)
     calcule.format = (char *)___ldprintf___;
    else
     need_to_be_created = 3;
