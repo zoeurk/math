@@ -344,7 +344,7 @@ main(int argc,char **argv)
  int n,i,set;
  bool need_to_be_created = 0;
  argp_parse(&argp, argc, argv, 0, 0, &args);
- if(args.function == (unsigned long int)INIT)
+ if((int)args.function == INIT)
  {
   fprintf(stderr,"Aucune opération de fournie!!!\n");
   exit(EXIT_FAILURE);
