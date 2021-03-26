@@ -20,6 +20,9 @@ options[] = {	{"double",'d', NULL,0,"uliser une valeur double", 0},
 		{"cos",'c',"X",0,"cosinus d'un nombre X", 1},
 		{"sin",'s',"X",0,"sinus d'un nombre X", 1},
 		{"tan",'t',"X",0,"tangente d'un nombre X",1},
+		{"acos",'a',"X",0,"cosinus d'un nombre X", 1},
+		{"asin",'A',"X",0,"sinus d'un nombre X", 1},
+		{"atan",'T',"X",0,"tangente d'un nombre X",1},
 		{"sqrt",'S',"X",0,"carré d'un nombre X",1},
 		{"exp",'e',"X",0,"valeur exponentiel d' un nombre X",1},
 		{"log",'l',"X",0,"logarithme naturel (en base 'e') d'un nombre X", 1},
@@ -59,7 +62,10 @@ enum functions
  CEIL	= 128,
  FLOOR	= 256,
  POW	= 512,
- FMOD	= 1024
+ FMOD	= 1024,
+ ACOS	= 2048,
+ ASIN	= 4096,
+ ATAN	= 8192
 
 }functions;
 enum type
@@ -168,6 +174,12 @@ parse_opt(int key, char *arg, struct argp_state *state)
   	    break;
   case 'o': args->function = FLOOR;
   	    args->numbers[0] = arg;
+  	    break;
+  case 'a': args->function = ACOS;
+  	    break;
+  case 'A': args->function = ASIN;
+  	    break;
+  case 'T': args->function = ATAN;
   	    break;
   case 'p': args->function = POW;
   	    if(comput_two_numbers(&args,arg) < 0)
@@ -391,6 +403,12 @@ main(int argc,char **argv)
      case FMOD : calcule.d.dfn2 = &fmod;
   	          n = 2;
   	          break;
+     case ACOS :  calcule.d.dfn = acos;
+     		  break;
+     case ASIN :  calcule.d.dfn = asin;
+     		  break;
+     case ATAN :  calcule.d.dfn = atan;
+     		  break;
      }
      break;
    case FLOAT:
@@ -432,6 +450,12 @@ main(int argc,char **argv)
      case FMOD : calcule.f.ffn2 = &fmodf;
   	          n = 2;
   	          break;
+     case ACOS :  calcule.f.ffn = acosf;
+     		  break;
+     case ASIN :  calcule.f.ffn = asinf;
+     		  break;
+     case ATAN :  calcule.f.ffn = atanf;
+     		  break;
     }
     break;
    case LDOUBLE:
@@ -473,6 +497,12 @@ main(int argc,char **argv)
      case FMOD : calcule.l.ldfn2 = &fmodl;
   	          n = 2;
   	          break;
+     case ACOS :  calcule.l.ldfn = &acosl;
+     		  break;
+     case ASIN :  calcule.l.ldfn = &asinl;
+     		  break;
+     case ATAN :  calcule.l.ldfn = &atanl;
+     		  break;
     }
     break;
    }
