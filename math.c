@@ -176,10 +176,13 @@ parse_opt(int key, char *arg, struct argp_state *state)
   	    args->numbers[0] = arg;
   	    break;
   case 'a': args->function = ACOS;
+  	    args->numbers[0] = arg;
   	    break;
   case 'A': args->function = ASIN;
+  	    args->numbers[0] = arg;
   	    break;
   case 'T': args->function = ATAN;
+  	    args->numbers[0] = arg;
   	    break;
   case 'p': args->function = POW;
   	    if(comput_two_numbers(&args,arg) < 0)
@@ -403,11 +406,14 @@ main(int argc,char **argv)
      case FMOD : calcule.d.dfn2 = &fmod;
   	          n = 2;
   	          break;
-     case ACOS :  calcule.d.dfn = acos;
+     case ACOS :  calcule.d.dfn = &acos;
+     		  n = 1;
      		  break;
-     case ASIN :  calcule.d.dfn = asin;
+     case ASIN :  calcule.d.dfn = &asin;
+     		  n = 1;
      		  break;
-     case ATAN :  calcule.d.dfn = atan;
+     case ATAN :  calcule.d.dfn = &atan;
+     		  n = 1;
      		  break;
      }
      break;
@@ -450,11 +456,14 @@ main(int argc,char **argv)
      case FMOD : calcule.f.ffn2 = &fmodf;
   	          n = 2;
   	          break;
-     case ACOS :  calcule.f.ffn = acosf;
+     case ACOS :  calcule.f.ffn = &acosf;
+     		  n = 1;
      		  break;
-     case ASIN :  calcule.f.ffn = asinf;
+     case ASIN :  calcule.f.ffn = &asinf;
+     		  n = 1;
      		  break;
-     case ATAN :  calcule.f.ffn = atanf;
+     case ATAN :  calcule.f.ffn = &atanf;
+     		  n = 1;
      		  break;
     }
     break;
@@ -498,10 +507,13 @@ main(int argc,char **argv)
   	          n = 2;
   	          break;
      case ACOS :  calcule.l.ldfn = &acosl;
+     		  n = 1;
      		  break;
      case ASIN :  calcule.l.ldfn = &asinl;
+     		  n = 1;
      		  break;
      case ATAN :  calcule.l.ldfn = &atanl;
+     		  n = 1;
      		  break;
     }
     break;
