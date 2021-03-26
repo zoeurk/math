@@ -70,8 +70,8 @@ enum functions
 }functions;
 enum type
 {
- DOUBLE  = 0,
- FLOAT   = 1,
+ FLOAT   = 0,
+ DOUBLE  = 1,
  LDOUBLE = 2,
  IRADIAN = 4,
  ORADIAN = 8,
@@ -146,7 +146,6 @@ parse_opt(int key, char *arg, struct argp_state *state)
  {
   case 'c': args->function = COS;
   	    args->numbers[0] = arg;
-
   	    break;
   case 's': args->function = SIN;
   	    args->numbers[0] = arg;
