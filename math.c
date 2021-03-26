@@ -31,7 +31,6 @@ options[] = {	{"double",'d', NULL,0,"uliser une valeur double", 0},
 		{"fmod",'m',"X:Y",0,"reste de X/Y",2},
 		{"virgule",'O',"FORMAT",0,"afficher nombre de chiffre après la virgule",4},
 		{"radian",'R',NULL,0,"afficher le résultat en radian plutôt quand degrès",3},
-		{"odegre",'o',NULL,0,"afficher le résultat en degree",3},
 		{"degre",'r',NULL,0,"les entrées sont en degrès plutôt quand radian",3},
 		{"newline",'N',NULL,0,"affiche le resultat avec un nouvelle ligne: \"result\\n\"", 5},
 		{0}
