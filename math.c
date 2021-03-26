@@ -33,7 +33,6 @@ options[] = {	{"double",'d', NULL,0,"uliser une valeur double", 0},
 		{"radian",'R',NULL,0,"afficher le résultat en radian plutôt quand degrès",3},
 		{"odegre",'o',NULL,0,"afficher le résultat en degree",3},
 		{"degre",'r',NULL,0,"les entrées sont en degrès plutôt quand radian",3},
-		{"degre",'x',NULL,0,"afficher la sortie en degree",3},
 		{"newline",'N',NULL,0,"affiche le resultat avec un nouvelle ligne: \"result\\n\"", 5},
 		{0}
  };
@@ -69,9 +68,8 @@ enum type
  FLOAT   = 1,
  LDOUBLE = 2,
  IDEGRES = 4,
- ODEGRES = 8,
- ORADIAN = 16,
- NEWLINE = 32
+ ORADIAN = 8,
+ NEWLINE = 16
 }type;
 struct arguments
 {
@@ -195,8 +193,6 @@ parse_opt(int key, char *arg, struct argp_state *state)
   case 'r': args->type |= IDEGRES;
   	    break;
   case 'R': args->type |= ORADIAN;
-  	    break;
-  case 'x': args->type |= ODEGRES;
   	    break;
   case 'N': args->type |= NEWLINE;
   	    break;
@@ -595,14 +591,12 @@ main(int argc,char **argv)
    switch(set)
    {
     case DOUBLE:  calcule.result.dresult = calcule.d.dfn2(calcule.value.dnumber[0],calcule.value.dnumber[1]);
-    		  if(!(args.type&ORADIAN) && args.type&ODEGRES)
-    		  	calcule.result.dresult = calcule.result.dresult*PI/180;
     		  break;
     		  	calcule.result.fresult = calcule.result.fresult*PI/180;
     		  break;
+    case FLOAT: calcule.result.fresult = calcule.f.ffn2(calcule.value.fnumber[0],calcule.value.fnumber[1]);
+    		  break;
     case LDOUBLE: calcule.result.ldresult = calcule.l.ldfn2(calcule.value.ldnumber[0],calcule.value.ldnumber[1]);
-    		  if(!(args.type&ORADIAN) && args.type&ODEGRES)
-    		  	calcule.result.ldresult = calcule.result.ldresult*PI/180;
     		  break;
    }
    break;
@@ -610,16 +604,10 @@ main(int argc,char **argv)
    switch(set)
    {
     case DOUBLE : calcule.result.dresult = calcule.d.dfn(calcule.value.dnumber[0]);
-    		  if(!(args.type&ORADIAN) && args.type&ODEGRES)
-    		  	calcule.result.dresult = calcule.result.dresult*PI/180;
  		  break;
     case FLOAT  : calcule.result.fresult = calcule.f.ffn(calcule.value.fnumber[0]);
-    		  if(!(args.type&ORADIAN) && args.type&ODEGRES)
-    		  	calcule.result.fresult = calcule.result.fresult*PI/180;
  		  break;
     case LDOUBLE: calcule.result.ldresult = calcule.l.ldfn(calcule.value.ldnumber[0]);
-    		  if(!(args.type&ORADIAN) && args.type&ODEGRES)
-    		  	calcule.result.ldresult = calcule.result.ldresult*PI/180;
  		  break;
    }
    break;
