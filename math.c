@@ -20,9 +20,9 @@ options[] = {	{"double",'d', NULL,0,"uliser une valeur double", 0},
 		{"cos",'c',"X",0,"cosinus d'un nombre X", 1},
 		{"sin",'s',"X",0,"sinus d'un nombre X", 1},
 		{"tan",'t',"X",0,"tangente d'un nombre X",1},
-		{"acos",'a',"X",0,"cosinus(-1) d'un nombre X", 1},
-		{"asin",'A',"X",0,"sinus(-1) d'un nombre X", 1},
-		{"atan",'T',"X",0,"tangente(-1) d'un nombre X",1},
+		{"acos",'a',"X",0,"cosinus d'un nombre X", 1},
+		{"asin",'A',"X",0,"sinus d'un nombre X", 1},
+		{"atan",'T',"X",0,"tangente d'un nombre X",1},
 		{"sqrt",'S',"X",0,"carré d'un nombre X",1},
 		{"exp",'e',"X",0,"valeur exponentiel d' un nombre X",1},
 		{"log",'l',"X",0,"logarithme naturel (en base 'e') d'un nombre X", 1},
@@ -349,8 +349,8 @@ main(int argc,char **argv)
  struct arguments args = { 0, INIT, { NULL, NULL}, NULL};
  struct comput calcule = {0,0,NULL,0,{{0,0}},{{NULL}},NULL,{0}};
  char
- 	*___dprintf___ = "%.6lf",
-	*___fprintf___ = "%.12f",
+ 	*___fprintf___ = "%.6lf",
+	*___dprintf___ = "%.12f",
 	*___ldprintf___= "%.18Lf",
 	*format[3] = {"lf","f","Lf"};
  char *end[2], *format_tmp;
