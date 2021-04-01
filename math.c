@@ -527,6 +527,7 @@ main(int argc,char **argv)
     if(args.numbers[i]){
      end[i] = &args.numbers[i][strlen(args.numbers[i])-1];
      calcule.value.dnumber[i] = strtod(args.numbers[i],&end[i]);
+    if(i < 1){
     if(!(args.type&ORADIAN) && (args.type&IRADIAN))
      calcule.value.dnumber[i] = calcule.value.dnumber[i]*PI/180;
     else
@@ -539,6 +540,7 @@ main(int argc,char **argv)
        if(!(args.type&ORADIAN) && (args.type&IRADIAN))
         calcule.value.dnumber[i] = calcule.value.dnumber[i]*180/PI;
     }
+   }
    }
    format_tmp = (char *)format[set];
    /*if(!args.format || check_virgule(args.format))*/
@@ -555,6 +557,7 @@ main(int argc,char **argv)
      if(args.numbers[i]){
       end[i] = &args.numbers[i][strlen(args.numbers[i])-1];
       calcule.value.fnumber[i] = strtof(args.numbers[i],&end[i]);
+      if(i == 1){
       if(!(args.type&ORADIAN) && (args.type&IRADIAN)){
        calcule.value.fnumber[i] = calcule.value.fnumber[i]*PI/180;
       }
@@ -571,6 +574,7 @@ main(int argc,char **argv)
 	 }
     }
    }
+   }
    format_tmp = (char *)format[set];
    /*if(!args.format || check_virgule(args.format))*/
    if(!args.format)
@@ -586,6 +590,7 @@ main(int argc,char **argv)
     if(args.numbers[i]){
      end[i] = &args.numbers[i][strlen(args.numbers[i]-1)];
      calcule.value.ldnumber[i] = strtold(args.numbers[i],&end[i]);
+     if(i < 1){
      if(!(args.type&ORADIAN) && !(args.type&IRADIAN))
       calcule.value.ldnumber[i] = calcule.value.ldnumber[i]*PI/180;
      else
@@ -598,6 +603,7 @@ main(int argc,char **argv)
         if((args.type&ORADIAN) && !(args.type&IRADIAN))
          calcule.value.ldnumber[i] = calcule.value.ldnumber[i]*180/PI;
     }
+   }
    }
    format_tmp = (char *)format[set];
    /*if(!args.format || check_virgule(args.format))*/
