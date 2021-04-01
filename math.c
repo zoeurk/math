@@ -35,7 +35,7 @@ options[] = {	{"double",'d', NULL,0,"uliser une valeur double", 0},
 		{"virgule",'O',"FORMAT",0,"afficher nombre de chiffre après la virgule",4},
 		{"Radian",'R',NULL,0,"afficher le résultat est converti en radian",3},
 		{"idegres",'r',NULL,0,"les entrées sont converti en degres plutôt quand radian",3},
- 		{"odegres",'x',NULL,0,"la sortie en est converti degrès si l'entree est converti en degrès",3},
+ 		{"odegres",'x',NULL,0,"calcule l'angle en degrès si l'entree est converti en degrès",3},
 		{"newline",'N',NULL,0,"affiche le resultat avec un nouvelle ligne: \"result\\n\"", 6},
 		{0}
  };
