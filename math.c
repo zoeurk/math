@@ -534,10 +534,10 @@ main(int argc,char **argv)
       calcule.value.dnumber[i] = calcule.value.dnumber[i];
      else
       if((args.type&ORADIAN) && (args.type&IRADIAN))
-       calcule.value.dnumber[i] = calcule.value.dnumber[i]*180/PI;
+       calcule.value.dnumber[i] = calcule.value.dnumber[i];
       else
        if(!(args.type&ORADIAN) && (args.type&IRADIAN))
-        calcule.value.dnumber[i] = calcule.value.dnumber[i];
+        calcule.value.dnumber[i] = calcule.value.dnumber[i]*180/PI;
     }
    }
    format_tmp = (char *)format[set];
@@ -555,19 +555,20 @@ main(int argc,char **argv)
      if(args.numbers[i]){
       end[i] = &args.numbers[i][strlen(args.numbers[i])-1];
       calcule.value.fnumber[i] = strtof(args.numbers[i],&end[i]);
-      if(!(args.type&ORADIAN) && (args.type&IRADIAN)){\
+      if(!(args.type&ORADIAN) && (args.type&IRADIAN)){
        calcule.value.fnumber[i] = calcule.value.fnumber[i]*PI/180;
       }
       else
-       if(((args.type&ORADIAN) && !(args.type&IRADIAN))){
+       if(((args.type&ORADIAN) && (args.type&IRADIAN))){
         calcule.value.fnumber[i] = calcule.value.fnumber[i];
        }else
         if((args.type&ORADIAN) && (args.type&IRADIAN)){
-         calcule.value.fnumber[i] = calcule.value.fnumber[i]*180/PI;
+         calcule.value.fnumber[i] = calcule.value.fnumber[i];
 	}
         else
-         if(!(args.type&ORADIAN) && (args.type&IRADIAN))
-          calcule.value.fnumber[i] = calcule.value.fnumber[i];
+         if((args.type&ORADIAN) && !(args.type&IRADIAN)){
+          calcule.value.fnumber[i] = calcule.value.fnumber[i]*180/PI;
+	 }
     }
    }
    format_tmp = (char *)format[set];
@@ -592,10 +593,10 @@ main(int argc,char **argv)
        calcule.value.ldnumber[i] = calcule.value.ldnumber[i];
       else
        if((args.type&ORADIAN) && (args.type&IRADIAN))
-        calcule.value.ldnumber[i] = calcule.value.ldnumber[i]*180/PI;
+        calcule.value.ldnumber[i] = calcule.value.ldnumber[i];
        else
         if(!(args.type&ORADIAN) && (args.type&IRADIAN))
-         calcule.value.ldnumber[i] = calcule.value.ldnumber[i];
+         calcule.value.ldnumber[i] = calcule.value.ldnumber[i]*180/PI;
     }
    }
    format_tmp = (char *)format[set];
