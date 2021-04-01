@@ -595,7 +595,7 @@ main(int argc,char **argv)
        if((args.type&ORADIAN) && (args.type&IRADIAN))
         calcule.value.ldnumber[i] = calcule.value.ldnumber[i];
        else
-        if(!(args.type&ORADIAN) && (args.type&IRADIAN))
+        if((args.type&ORADIAN) && !(args.type&IRADIAN))
          calcule.value.ldnumber[i] = calcule.value.ldnumber[i]*180/PI;
     }
    }
