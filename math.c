@@ -559,21 +559,17 @@ main(int argc,char **argv)
       end[i] = &args.numbers[i][strlen(args.numbers[i])-1];
       calcule.value.fnumber[i] = strtof(args.numbers[i],&end[i]);
       if(!(args.type&ORADIAN) && (args.type&IRADIAN)){
-	      printf("**********\n");
        calcule.value.fnumber[i] = calcule.value.fnumber[i]*PI/180;
       }
       else
        if(((args.type&ORADIAN) && !(args.type&IRADIAN))){
-	       printf("============\n");
         calcule.value.fnumber[i] = calcule.value.fnumber[i]*180/PI;
        }else
         if((args.type&ORADIAN) && (args.type&IRADIAN)){
-		printf("/////////////\n");
          calcule.value.fnumber[i] = calcule.value.fnumber[i];
 	}
         else
          if(!(args.type&ORADIAN) && !(args.type&IRADIAN)){
-		 printf("-------------\n");
           calcule.value.fnumber[i] = calcule.value.fnumber[i];
 	  }
     }
