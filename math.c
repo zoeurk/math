@@ -7,7 +7,7 @@
 #include <stdarg.h>
 #include <string.h>
 
-#define PI 3.141592653589793
+#define PI 3.14159265358979323846264338327
 
 const char *argp_program_version= "math-0.1";
 const char *argp_program_bug_address = "zoeurk@gmail.com";
